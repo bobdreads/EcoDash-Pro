@@ -1,0 +1,317 @@
+{% load compress %}
+{% load static %}
+
+<!-- npx tailwindcss -i ./static/src/input.css -o ./static/src/output.css --watch -->
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta http equiv= "X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoDash Pro</title>
+    <!-- MATERIAL ICON -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=menu_open" />
+    <!-- stylesheet -->
+    <link rel="stylesheet" href={% static "global/css/base-style.css" %}>
+    {% compress css %}
+    <link rel="stylesheet" href="{% static 'src/output.css' %}">
+    {% endcompress %}
+    {% block style %}
+    {% endblock style %}
+</head>
+<body class="bg-gray-100 font-inter">
+    <noscript>
+        "<iframe src="https://www.googletagmanager.com/ns.html?id=GTM-THQTXJ7"
+        height="0" width="0" style="display:none;visibility:hidden"></iframe>"
+    </noscript>
+    <!--Começo da nav-->
+    <nav class="fixed z-30 w-full bg-gray-100">
+        <div class="py-3 px-3 lg:px-5 lg:pl-3">
+            <div class="flex justify-between items-center">
+                <div class="flex justify-start items-center">
+                    </button>
+                    <div class="text-md font-semibold flex items-center lg:mr-1.5">
+                        <img src={% static "global/img/logo.png" %} class="mr-2 h-9 w-9" alt="EcoDash Logo">
+                        <span class="hidden md:inline-block self-center text-2xl font-bold whitespace-nowrap">EcoDash PRO</span>
+                    </div>
+                </div>
+                <div class="flex items-center">
+                    <!--Apps começo-->
+                    <button type="button" data-dropdown-toggle="apps-dropdown" id="apps-menu-button" class="p-2 text-gray-500 rounded-2xl hover:text-gray-900 hover:bg-gray-100">
+                        <svg class="w-6 h-6" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <g><path  d="M4 2a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2zm2 20a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm8-6a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2h-4a2 2 0 0 1-2-2zm4.5-13.25a.75.75 0 0 0-1.5 0V5.5h-2.75a.75.75 0 0 0 0 1.5H17v2.75a.75.75 0 0 0 1.5 0V7h2.75a.75.75 0 0 0 0-1.5H18.5z"></path></g>
+                        </svg>
+                    </button>
+                    <div class="hidden z-50 my-4 max-w-sm text-base list-none bg-white rounded divide-y divide-gray-100 shadow-lg shadow-gray-300" id="apps-dropdown" style="position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate(786px, 65px);" data-popper-placement="bottom">
+                        <div class="block py-2 px-4 text-base font-medium text-center text-gray-700 bg-gray-100">Apps</div>
+                        <div class="grid grid-cols-3 gap-4 p-4">
+                            <a href="#" class="block p-4 text-center rounded-2xl hover:bg-gray-100">
+                                <svg class="mx-auto mb-1 w-7 h-7 text-gray-500" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                                    <g><path d="M0 0v241h241V0zm185.67 135.18h-50.48v50.48h-30v-50.48H54.7v-30h50.49V54.7h30v50.48h50.48zM0 271v241h241V271zm177.09 156.52-21.22 21.21-35.69-35.69-35.7 35.69-21.21-21.21 35.69-35.7-35.69-35.69 21.21-21.22 35.7 35.7 35.69-35.7 21.22 21.22-35.7 35.69zM271 0v241h241V0zm186.3 135.18H326.34v-30H457.3zM271 271v241h241V271zm104.94 44.91h30.85v30h-30.85zm30.85 150.62h-30.85v-30h30.85zm50.06-59.59H325.88v-30h130.97z"></path></g>
+                                </svg>
+                                <div class="text-sm font-medium text-gray-900">Cálculo L/P</div>
+                            </a>
+                            <a href="#" class="block p-4 text-center rounded-2xl hover:bg-gray-100">
+                                <svg class="mx-auto mb-1 w-7 h-7 text-gray-500" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 60">
+                                    <g><path d="M40.5 33v14c0 .55-.45 1-1 1h-2v5c0 .55-.45 1-1 1s-1-.45-1-1v-5h-2c-.55 0-1-.45-1-1V33c0-.55.45-1 1-1h2v-5c0-.55.45-1 1-1s1 .45 1 1v5h2c.55 0 1 .45 1 1zM53.5 21v18c0 .55-.45 1-1 1h-2v5c0 .55-.45 1-1 1s-1-.45-1-1v-5h-2c-.55 0-1-.45-1-1V21c0-.55.45-1 1-1h2v-4c0-.55.45-1 1-1s1 .45 1 1v4h2c.55 0 1 .45 1 1zM14.5 39v8c0 .55-.45 1-1 1h-2v5c0 .55-.45 1-1 1s-1-.45-1-1v-5h-2c-.55 0-1-.45-1-1v-8c0-.55.45-1 1-1h2v-5c0-.55.45-1 1-1s1 .45 1 1v5h2c.55 0 1 .45 1 1zM27.5 12v21c0 .55-.45 1-1 1h-2v5c0 .55-.45 1-1 1s-1-.45-1-1v-5h-2c-.55 0-1-.45-1-1V12c0-.55.45-1 1-1h2V7c0-.55.45-1 1-1s1 .45 1 1v4h2c.55 0 1 .45 1 1z"></path></g>
+                                </svg>
+                                <div class="text-sm font-medium text-gray-900">Paridade</div>
+                            </a>
+                            <a href="#" class="block p-4 text-center rounded-2xl hover:bg-gray-100">
+                                <svg class="mx-auto mb-1 w-7 h-7 text-gray-500" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                                    <g><path d="M482 199.105c-16.569 0-30 13.431-30 30v180h60v-180c0-16.569-13.431-30-30-30zM422 469.105v-240c0-10.977 3.179-21.14 8.346-30H362v270c0 16.567 13.431 30 30 30s30-13.432 30-30zM76 499.105h264.346c-5.167-8.86-8.346-19.023-8.346-30V57.895l-46-45-30 30-30-30-30 30-30-30-30 30-30-30-30 30-30-30-46 45v366.211c0 41.352 34.633 74.999 76 74.999zm90.059-269.648c-24.814 0-45-20.186-45-45 0-19.57 12.462-36.088 29.941-42.27v-33.082h30v33.149c17.364 6.242 30.059 22.363 30.059 41.851h-30c0-8.276-6.738-14.648-15-14.648s-15 6.724-15 15 6.738 15 15 15c24.814 0 45 20.186 45 45 0 19.55-12.609 36.061-30.059 42.255v32.393h-30v-32.43c-17.391-6.229-29.941-23.062-29.941-42.57h30c0 8.276 6.738 15.352 15 15.352s15-6.724 15-15-6.739-15-15-15zM121 349.105h150v30H121zm0 60h150v30H121zm-60-60h30v30H61zm0 60h30v30H61z"></path></g>
+                                </svg>
+                                <div class="text-sm font-medium text-gray-900">Taxas B3</div>
+                            </a>
+                            <a href="#" class="block p-4 text-center rounded-2xl hover:bg-gray-100">
+                                <svg class="mx-auto mb-1 w-7 h-7 text-gray-500" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+                                    <g>
+                                        <path d="M35 2a11 11 0 1 0 11 11A11.007 11.007 0 0 0 35 2zm3 16h-6a.983.983 0 0 1-.81-.42 1 1 0 0 1-.14-.9l.59-1.75A1 1 0 0 1 32 13V9a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2a1 1 0 0 1-2 0v-1h-2v3h2a1 1 0 0 1 0 2h-2.28l-.33 1H38a1 1 0 0 1 0 2z"></path>
+                                        <path d="m43.78 35.62-8 10a.991.991 0 0 1-1.56 0l-8-10A1.02 1.02 0 0 1 26 35a.935.935 0 0 1 .1-.43A1 1 0 0 1 27 34h4v-8.64a12.82 12.82 0 0 0 8 0V34h4a1 1 0 0 1 .9.57.981.981 0 0 1-.12 1.05zM13 24a11 11 0 1 0 11 11 11.007 11.007 0 0 0-11-11zm3 10a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1h-2v1a1 1 0 0 1-2 0v-1h-2a1 1 0 0 1 0-2h5v-2h-5a1 1 0 0 1-1-1v-4a1 1 0 0 1 1-1h2v-1a1 1 0 0 1 2 0v1h2a1 1 0 0 1 0 2h-5v2zM21.9 13.43a1 1 0 0 1-.9.57h-4v8.64a12.82 12.82 0 0 0-8 0V14H5a1 1 0 0 1-.9-.57.981.981 0 0 1 .12-1.05l8-10a1.025 1.025 0 0 1 1.56 0l8 10a.981.981 0 0 1 .12 1.05z"></path>
+                                    </g>
+                                </svg>
+                                <div class="text-sm font-medium text-gray-900">Conversor</div>
+                            </a>
+                            <a href="#" class="block p-4 text-center rounded-2xl hover:bg-gray-100">
+                                <svg class="mx-auto mb-1 w-7 h-7 text-gray-500" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                                    <g>
+                                        <path d="M437.852 43.198C429.36 34.688 418.066 30 406.05 30h-19.945v20c0 22.056-17.924 40-39.956 40h-179.8c-22.032 0-39.956-17.944-39.956-40V30h-20.011c-24.758 0-44.922 20.164-44.95 44.95l-.432 392c-.014 12.029 4.656 23.341 13.147 31.852C82.64 507.313 93.934 512 105.95 512h299.667c24.758 0 44.923-20.164 44.95-44.95l.433-392c.014-12.029-4.656-23.341-13.148-31.852zM261.094 180h106.453c8.275 0 14.983 6.716 14.983 15s-6.708 15-14.983 15H261.094c-8.275 0-14.983-6.716-14.983-15s6.708-15 14.983-15zm0 100h106.453c8.275 0 14.983 6.716 14.983 15s-6.708 15-14.983 15H261.094c-8.275 0-14.983-6.716-14.983-15s6.708-15 14.983-15zm0 100h106.881c8.275 0 14.983 6.716 14.983 15s-6.708 15-14.983 15H261.094c-8.275 0-14.983-6.716-14.983-15s6.708-15 14.983-15zM133.431 180.592c5.852-5.858 15.338-5.858 21.19 0l8.147 8.157 34.554-34.592c5.852-5.857 15.338-5.859 21.189 0 5.851 5.857 5.851 15.355 0 21.213l-45.149 45.198a14.972 14.972 0 0 1-21.19 0l-18.742-18.764c-5.851-5.857-5.851-15.355.001-21.212zm0 107.637c5.852-5.858 15.338-5.858 21.19 0l8.147 8.156 34.554-34.592c5.851-5.857 15.338-5.857 21.189 0s5.851 15.355 0 21.213l-45.149 45.199a14.974 14.974 0 0 1-21.19 0l-18.742-18.764c-5.851-5.857-5.851-15.354.001-21.212zm0 100c5.852-5.858 15.338-5.858 21.19 0l8.147 8.156 34.554-34.592c5.851-5.857 15.338-5.857 21.189 0s5.851 15.355 0 21.213l-45.149 45.199a14.974 14.974 0 0 1-21.19 0l-18.742-18.764c-5.851-5.857-5.851-15.354.001-21.212z"></path>
+                                        <path d="M156.361 50c0 5.523 4.472 10 9.989 10h179.8c5.517 0 9.989-4.477 9.989-10V10c0-5.523-4.472-10-9.989-10h-179.8c-5.517 0-9.989 4.477-9.989 10z"></path>
+                                    </g>
+                                </svg>
+                                <div class="text-sm font-medium text-gray-900">Metas</div>
+                            </a>
+                        </div>
+                    </div>
+                    <!--Apps Fim-->
+                    <div class="ml-3">
+                        <div>
+                            <button type="button" class="flex text-sm bg-gray-800 rounded-full " id="user-menu-button-2" aria-expanded="false" data-dropdown-toggle="dropdown-2">
+                                <img class="w-8 h-8 rounded-full" src={% static "global/img/user.jpg" %} alt="user photo">
+                            </button>
+                        </div>
+                        <div class="hidden z-50 my-4 text-base list-none bg-white rounded divide-y divide-gray-100 shadow-gray-300" id="dropdown-2" style="position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate(908px, 61px);" data-popper-placement="bottom">
+                            <div class="py-3 px-4" role="none">
+                                <p class="text-sm" role="none">Maurício</p>
+                                <p class="text-sm font-medium text-gray-900 truncate" role="none">ecodash@gmail.com</p>
+                            </div>
+                            <ul class="py-1" role="none">
+                                <li>
+                                    <a href="#" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Perfil</a>
+                                </li>
+                                <li>
+                                    <a href="#" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Configurações</a>
+                                </li>
+                                <li>
+                                    <a href="{% url "authentication:logout" %}" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Sair</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!--Fim da nav-->
+    <div class="flex overflow-hidden bg-white pt-16">
+        <!--=============================================== Inicio sidebar ===============================================-->
+        <aside class="hidden fixed top-0 left-0 z-20 flex-col flex-shrink-0 pt-16 w-64 h-full duration-200 lg:flex transition-width lg:w-64" aria-label="Sidebar">
+            <div class="flex relative flex-col flex-1 pt-0 min-h-0 bg-gray-100">
+                <div class="flex overflow-y-auto flex-col flex-1 pt-8 pb-4">
+                    <div class="flex-1 px-3 bg-gray-100">
+                        <ul class="pb-2 pt-1">
+                            <li>
+                                <a href="#" class="flex items-center py-2.5 px-4 text-base font-normal text-dark-500/100 rounded-lg hover:bg-gray-200 group transition-all duration-200" sidebar-toogle-collapse>
+                                    <div class="bg-white shadow-lg shadow-gray-300  text-dark-700 w-8 h-8 p-2.5 mr-1 rounded-lg text-center grid place-items-center">
+                                        <svg width="12px" height="12px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 495.398 495.398">
+                                            <title>Dashboard</title>
+                                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                <g transform="translate(-1716.000000, -439.000000)" fill="currentColor" fill-rule="nonzero">
+                                                    <g transform="translate(1716.000000, 291.000000)">
+                                                        <g transform="translate(0.000000, 148.000000)">
+                                                            <path d="m487.083 225.514-75.08-75.08v-86.73c0-15.682-12.708-28.391-28.413-28.391-15.669 0-28.377 12.709-28.377 28.391v29.941L299.31 37.74c-27.639-27.624-75.694-27.575-103.27.05L8.312 225.514c-11.082 11.104-11.082 29.071 0 40.158 11.087 11.101 29.089 11.101 40.172 0l187.71-187.729c6.115-6.083 16.893-6.083 22.976-.018l187.742 187.747a28.337 28.337 0 0 0 20.081 8.312c7.271 0 14.541-2.764 20.091-8.312 11.086-11.086 11.086-29.053-.001-40.158z"></path>
+                                                            <path d="M257.561 131.836c-5.454-5.451-14.285-5.451-19.723 0L72.712 296.913a13.977 13.977 0 0 0-4.085 9.877v120.401c0 28.253 22.908 51.16 51.16 51.16h81.754v-126.61h92.299v126.61h81.755c28.251 0 51.159-22.907 51.159-51.159V306.79c0-3.713-1.465-7.271-4.085-9.877L257.561 131.836z"></path>
+                                                        </g>
+                                                    </g>
+                                                </g>
+                                            </g>
+                                        </svg>
+                                    </div>
+                                    <span class="ml-3 text-dark-500/100/100 text-sm font-light" sidebar-toggle-item>Dashboard</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="flex items-center py-2.5 px-4 text-base font-normal text-dark-500/100 rounded-lg hover:bg-gray-200 group transition-all duration-200" sidebar-toogle-collapse>
+                                    <div class="bg-white shadow-lg shadow-gray-300  text-dark-700 w-8 h-8 p-2.5 mr-1 rounded-lg text-center grid place-items-center">
+                                        <svg width="12px" height="12px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                                            <title>Trades</title>
+                                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                <g transform="translate(-1716.000000, -439.000000)" fill="currentColor" fill-rule="nonzero">
+                                                    <g transform="translate(1716.000000, 291.000000)">
+                                                        <g transform="translate(0.000000, 148.000000)">
+                                                            <path d="M452 78.67h-.72V40c0-6.9-5.6-12.5-12.5-12.5s-12.5 5.6-12.5 12.5v38.67h-.72c-17.92 0-32.5 14.58-32.5 32.5V362.6c0 17.92 14.58 32.5 32.5 32.5h.72v38.67c0 6.9 5.6 12.5 12.5 12.5s12.5-5.6 12.5-12.5V395.1h.72c17.92 0 32.5-14.58 32.5-32.5V111.17c0-17.92-14.58-32.5-32.5-32.5zM330.15 199.9h-.72v-19.17c0-6.9-5.6-12.5-12.5-12.5s-12.5 5.6-12.5 12.5v19.17h-.72c-17.92 0-32.5 14.58-32.5 32.5v187.92c0 17.92 14.58 32.5 32.5 32.5h.72v19.17c0 6.9 5.6 12.5 12.5 12.5s12.5-5.6 12.5-12.5v-19.17h.72c17.92 0 32.5-14.58 32.5-32.5V232.4c0-17.92-14.58-32.5-32.5-32.5zM208.3 158.71h-.72v-25.93c0-6.9-5.6-12.5-12.5-12.5s-12.5 5.6-12.5 12.5v25.93h-.72c-17.92 0-32.5 14.58-32.5 32.5v115.15c0 17.92 14.58 32.5 32.5 32.5h.72v25.93c0 6.9 5.6 12.5 12.5 12.5s12.5-5.6 12.5-12.5v-25.93h.72c17.92 0 32.5-14.58 32.5-32.5V191.21c0-17.92-14.58-32.5-32.5-32.5zM86.44 84.54h-.72V40c0-6.9-5.6-12.5-12.5-12.5s-12.5 5.6-12.5 12.5v44.54H60c-17.92 0-32.5 14.58-32.5 32.5v232.12c0 17.92 14.58 32.5 32.5 32.5h.72v44.54c0 6.9 5.6 12.5 12.5 12.5s12.5-5.6 12.5-12.5v-44.54h.72c17.92 0 32.5-14.58 32.5-32.5V117.04c0-17.92-14.58-32.5-32.5-32.5z"></path>
+                                                        </g>
+                                                    </g>
+                                                </g>
+                                            </g>
+                                        </svg>
+                                    </div>
+                                    <span class="ml-3 text-dark-500/100/100 text-sm font-light" sidebar-toggle-item>Trades</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="flex items-center py-2.5 px-4 text-base font-normal text-dark-500/100 rounded-lg hover:bg-gray-200 group transition-all duration-200" sidebar-toogle-collapse>
+                                    <div class="bg-white shadow-lg shadow-gray-300  text-dark-700 w-8 h-8 p-2.5 mr-1 rounded-lg text-center grid place-items-center">
+                                        <svg width="12px" height="12px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 495.398 495.398">
+                                            <title>Calendário</title>
+                                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                <g transform="translate(-1716.000000, -439.000000)" fill="currentColor" fill-rule="nonzero">
+                                                    <g transform="translate(1716.000000, 291.000000)">
+                                                        <g transform="translate(0.000000, 148.000000)">
+                                                            <path d="M61 0h30v30H61zM151 0h30v30h-30zM301 0h30v30h-30zM391 0h30v30h-30zM91 240h30v30H91zM421 90h30v30h-60V30h-60v60h30v30h-60V30H181v60h30v30h-60V30H91v60h30v30H61V30H0v120h512V30h-91zM241 240h30v30h-30zM91 360h30v30H91zM241 360h30v30h-30zm0 0"></path>
+                                                            <path d="M0 480h512V180H0zm361-270h90v90h-90zm0 120h90v90h-90zM211 210h90v90h-90zm0 120h90v90h-90zM61 210h90v90H61zm0 120h90v90H61zm0 0"></path>
+                                                            <path d="M391 240h30v30h-30zM391 360h30v30h-30zm0 0"></path>
+                                                        </g>
+                                                    </g>
+                                                </g>
+                                            </g>
+                                        </svg>
+                                    </div>
+                                    <span class="ml-3 text-dark-500/100 text-sm font-light" sidebar-toggle-item>Calendário</span>
+                                </a>
+                            </li>
+                            <li>
+                                <button type="button" class="w-full flex items-center py-2.5 px-4 text-base font-normal text-dark-500/100 rounded-lg hover:bg-gray-200 group transition-all duration-200" sidebar-toggle-collapse aria-controls="dropdown-sidebar" data-collapse-toggle="dropdown-sidebar" aria-expanded="false">
+                                    <div class="bg-white shadow-lg shadow-gray-300  text-dark-700 w-8 h-8 p-2.5 mr-1 rounded-lg text-center grid place-items-center">
+                                        <svg width="12px" height="12px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                                            <title>Análises</title>
+                                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                <g transform="translate(-1716.000000, -439.000000)" fill="currentColor" fill-rule="nonzero">
+                                                    <g transform="translate(1716.000000, 291.000000)">
+                                                        <g transform="translate(0.000000, 148.000000)">
+                                                            <path d="M496 0H336c-8.832 0-16 7.168-16 16v480c0 8.832 7.168 16 16 16h160c8.832 0 16-7.168 16-16V16c0-8.832-7.168-16-16-16zM176 160c-8.832 0-16 7.168-16 16v320c0 8.832 7.168 16 16 16h112V160H176zM16 320c-8.832 0-16 7.168-16 16v160c0 8.832 7.168 16 16 16h112V320H16z"></path></svg>
+                                                        </g>
+                                                    </g>
+                                                </g>
+                                            </g>
+                                        </svg>
+                                    </div>
+                                    <span class="ml-3 text-dark-500/100 text-sm font-light" sidebar-toggle-item>Análises</span>
+                                    <svg sidebar-toggle-item class="w-4 h-4 ml-auto text-gray-700" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M480-333 240-573l51-51 189 189 189-189 51 51-240 240Z" clip-rule="evenodd"/>
+                                    </svg>
+                                </button>
+                                <ul id="dropdown-sidebar" class="hidden pb-2 pt-1">
+                                    <li>
+                                        <a href="#" class="text-sm text-dark-500/100 font-light rounded-lg flex items-center p-2 group hover:bg-gray-200 transition duration-75 pl-11">
+                                            <span class>Morning Call</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="text-sm text-dark-500/100 font-light rounded-lg flex items-center p-2 group hover:bg-gray-200 transition duration-75 pl-11">
+                                            <span class>Insights</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="text-sm text-dark-500/100 font-light rounded-lg flex items-center p-2 group hover:bg-gray-200 transition duration-75 pl-11">
+                                            <span class>Gráfico</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#" class="flex items-center py-2.5 px-4 text-base font-normal text-dark-500/100 rounded-lg hover:bg-gray-200 group transition-all duration-200" sidebar-toogle-collapse>
+                                    <div class="bg-white shadow-lg shadow-gray-300  text-dark-700 w-8 h-8 p-2.5 mr-1 rounded-lg text-center grid place-items-center">
+                                        <svg width="12px" height="12px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                                            <title>Setups</title>
+                                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                <g transform="translate(-1716.000000, -439.000000)" fill="currentColor" fill-rule="nonzero">
+                                                    <g transform="translate(1716.000000, 291.000000)">
+                                                        <g transform="translate(0.000000, 148.000000)">
+                                                            <path d="M437.852 43.198C429.36 34.688 418.066 30 406.05 30h-19.945v20c0 22.056-17.924 40-39.956 40h-179.8c-22.032 0-39.956-17.944-39.956-40V30h-20.011c-24.758 0-44.922 20.164-44.95 44.95l-.432 392c-.014 12.029 4.656 23.341 13.147 31.852C82.64 507.313 93.934 512 105.95 512h299.667c24.758 0 44.923-20.164 44.95-44.95l.433-392c.014-12.029-4.656-23.341-13.148-31.852zM261.094 180h106.453c8.275 0 14.983 6.716 14.983 15s-6.708 15-14.983 15H261.094c-8.275 0-14.983-6.716-14.983-15s6.708-15 14.983-15zm0 100h106.453c8.275 0 14.983 6.716 14.983 15s-6.708 15-14.983 15H261.094c-8.275 0-14.983-6.716-14.983-15s6.708-15 14.983-15zm0 100h106.881c8.275 0 14.983 6.716 14.983 15s-6.708 15-14.983 15H261.094c-8.275 0-14.983-6.716-14.983-15s6.708-15 14.983-15zM133.431 180.592c5.852-5.858 15.338-5.858 21.19 0l8.147 8.157 34.554-34.592c5.852-5.857 15.338-5.859 21.189 0 5.851 5.857 5.851 15.355 0 21.213l-45.149 45.198a14.972 14.972 0 0 1-21.19 0l-18.742-18.764c-5.851-5.857-5.851-15.355.001-21.212zm0 107.637c5.852-5.858 15.338-5.858 21.19 0l8.147 8.156 34.554-34.592c5.851-5.857 15.338-5.857 21.189 0s5.851 15.355 0 21.213l-45.149 45.199a14.974 14.974 0 0 1-21.19 0l-18.742-18.764c-5.851-5.857-5.851-15.354.001-21.212zm0 100c5.852-5.858 15.338-5.858 21.19 0l8.147 8.156 34.554-34.592c5.851-5.857 15.338-5.857 21.189 0s5.851 15.355 0 21.213l-45.149 45.199a14.974 14.974 0 0 1-21.19 0l-18.742-18.764c-5.851-5.857-5.851-15.354.001-21.212z"></path>
+                                                            <path d="M156.361 50c0 5.523 4.472 10 9.989 10h179.8c5.517 0 9.989-4.477 9.989-10V10c0-5.523-4.472-10-9.989-10h-179.8c-5.517 0-9.989 4.477-9.989 10z"></path>
+                                                        </g>
+                                                    </g>
+                                                </g>
+                                            </g>
+                                        </svg>
+                                    </div>
+                                    <span class="ml-3 text-dark-500/100 text-sm font-light" sidebar-toggle-item>Setups</span>
+                                </a>
+                            </li>
+                        </ul>
+                        <hr class="border-0 h-px bg-gradient-to-r from-gray-100 via-gray-300 to-gray-100">
+                        <div class="pt-2">
+                            <a href="#" class="flex items-center py-2.5 px-4 text-base font-normal text-dark-500/100 rounded-lg hover:bg-gray-200 group transition-all duration-200" sidebar-toogle-collapse>
+                                <div class="bg-white shadow-lg shadow-gray-300  text-dark-700 w-8 h-8 p-2.5 mr-1 rounded-lg text-center grid place-items-center">
+                                    <svg width="12px" height="12px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512.002">
+                                        <title>Perfil</title>
+                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                            <g transform="translate(-1716.000000, -439.000000)" fill="currentColor" fill-rule="nonzero">
+                                                <g transform="translate(1716.000000, 291.000000)">
+                                                    <g transform="translate(0.000000, 148.000000)">
+                                                        <path d="M210.352 246.633c33.882 0 63.222-12.153 87.195-36.13 23.973-23.972 36.125-53.304 36.125-87.19 0-33.876-12.152-63.211-36.129-87.192C273.566 12.152 244.23 0 210.352 0c-33.887 0-63.22 12.152-87.192 36.125s-36.129 53.309-36.129 87.188c0 33.886 12.156 63.222 36.133 87.195 23.977 23.969 53.313 36.125 87.188 36.125zM426.129 393.703c-.692-9.976-2.09-20.86-4.149-32.351-2.078-11.579-4.753-22.524-7.957-32.528-3.308-10.34-7.808-20.55-13.37-30.336-5.774-10.156-12.555-19-20.165-26.277-7.957-7.613-17.699-13.734-28.965-18.2-11.226-4.44-23.668-6.69-36.976-6.69-5.227 0-10.281 2.144-20.043 8.5a2711.03 2711.03 0 0 1-20.879 13.46c-6.707 4.274-15.793 8.278-27.016 11.903-10.949 3.543-22.066 5.34-33.039 5.34-10.972 0-22.086-1.797-33.047-5.34-11.21-3.622-20.296-7.625-26.996-11.899-7.77-4.965-14.8-9.496-20.898-13.469-9.75-6.355-14.809-8.5-20.035-8.5-13.313 0-25.75 2.254-36.973 6.7-11.258 4.457-21.004 10.578-28.969 18.199-7.605 7.281-14.39 16.12-20.156 26.273-5.558 9.785-10.058 19.992-13.371 30.34-3.2 10.004-5.875 20.945-7.953 32.524-2.059 11.476-3.457 22.363-4.149 32.363A438.821 438.821 0 0 0 0 423.949c0 26.727 8.496 48.363 25.25 64.32 16.547 15.747 38.441 23.735 65.066 23.735h246.532c26.625 0 48.511-7.984 65.062-23.734 16.758-15.946 25.254-37.586 25.254-64.325-.004-10.316-.351-20.492-1.035-30.242zm0 0"></path>
+                                                    </g>
+                                                </g>
+                                            </g>
+                                        </g>
+                                    </svg>
+                                </div>
+                                <span class="ml-3 text-dark-500/100 text-sm font-light" sidebar-toggle-item>Perfil</span>
+                            </a>
+                            <a href="#" class="flex items-center py-2.5 px-4 text-base font-normal text-dark-500/100 rounded-lg hover:bg-gray-200 group transition-all duration-200" sidebar-toogle-collapse>
+                                <div class="bg-white shadow-lg shadow-gray-300  text-dark-700 w-8 h-8 p-2.5 mr-1 rounded-lg text-center grid place-items-center">
+                                    <svg width="12px" height="12px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+                                        <title>Configuracões</title>
+                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                            <g transform="translate(-1716.000000, -439.000000)" fill="currentColor" fill-rule="nonzero">
+                                                <g transform="translate(1716.000000, 291.000000)">
+                                                    <g transform="translate(0.000000, 148.000000)">
+                                                        <path d="M29.12 10.91 27 7.18a1 1 0 0 0-1.19-.45l-3 1a10.57 10.57 0 0 0-3-1.75l-.62-3.11a1 1 0 0 0-1-.8h-4.3a1 1 0 0 0-1 .8L12.25 6a10.7 10.7 0 0 0-3 1.75l-3-1A1 1 0 0 0 5 7.18l-2.12 3.73a1 1 0 0 0 .21 1.26l2.38 2.08A10.34 10.34 0 0 0 5.32 16a10.55 10.55 0 0 0 .15 1.76l-2.39 2.09a1 1 0 0 0-.2 1.25L5 24.83a1 1 0 0 0 1.19.44l3-1a10.73 10.73 0 0 0 3 1.76l.62 3.1a1 1 0 0 0 1 .8h4.29a1 1 0 0 0 .72-.3 1 1 0 0 0 .27-.51l.16-.74v-.07l.5-2.31a11.05 11.05 0 0 0 3-1.75l3 1a1 1 0 0 0 1.25-.42l2.15-3.73a1 1 0 0 0-.2-1.25l-2.38-2.1a11.67 11.67 0 0 0 .11-1.75 10.55 10.55 0 0 0-.13-1.7.07.07 0 0 0 0-.05l2.38-2.09a1 1 0 0 0 .19-1.25zM16 21a5 5 0 1 1 5-5 5 5 0 0 1-5 5z"></path>
+                                                    </g>
+                                                </g>
+                                            </g>
+                                        </g>
+                                    </svg>
+                                </div>
+                                <span class="ml-3 text-dark-500/100 text-sm font-light" sidebar-toggle-item>Configuracões</span>
+                            </a>
+                            <a href="#" class="flex items-center py-2.5 px-4 text-base font-normal text-dark-500/100 rounded-lg hover:bg-gray-200 group transition-all duration-200" sidebar-toogle-collapse>
+                                <div class="bg-white shadow-lg shadow-gray-300  text-dark-700 w-8 h-8 p-2.5 mr-1 rounded-lg text-center grid place-items-center">
+                                    <svg width="12px" height="12px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                                        <title>Sair</title>
+                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                            <g transform="translate(-1716.000000, -439.000000)" fill="currentColor" fill-rule="nonzero">
+                                                <g transform="translate(1716.000000, 291.000000)">
+                                                    <g transform="translate(0.000000, 148.000000)">
+                                                        <path d="M510.371 226.513c-1.088-2.603-2.645-4.971-4.629-6.955l-63.979-63.979c-8.341-8.32-21.824-8.32-30.165 0-8.341 8.341-8.341 21.845 0 30.165l27.584 27.584H320.013c-11.797 0-21.333 9.557-21.333 21.333s9.536 21.333 21.333 21.333h119.168l-27.584 27.584c-8.341 8.341-8.341 21.845 0 30.165 4.16 4.181 9.621 6.251 15.083 6.251s10.923-2.069 15.083-6.251l63.979-63.979c1.984-1.963 3.541-4.331 4.629-6.955a21.356 21.356 0 0 0 0-16.296z"></path>
+                                                        <path d="M362.68 298.667c-11.797 0-21.333 9.557-21.333 21.333v106.667h-85.333V85.333c0-9.408-6.187-17.728-15.211-20.437l-74.091-22.229h174.635v106.667c0 11.776 9.536 21.333 21.333 21.333s21.333-9.557 21.333-21.333v-128C384.013 9.557 374.477 0 362.68 0H21.347c-.768 0-1.451.32-2.197.405-1.003.107-1.92.277-2.88.512a21.476 21.476 0 0 0-6.165 2.645c-.469.299-1.045.32-1.493.661-.172.129-.236.364-.407.492-2.325 1.834-4.266 4.074-5.674 6.741-.299.576-.363 1.195-.597 1.792-.683 1.621-1.429 3.2-1.685 4.992-.107.64.085 1.237.064 1.856-.021.427-.299.811-.299 1.237V448c0 10.176 7.189 18.923 17.152 20.907l213.333 42.667c1.387.299 2.795.427 4.181.427a21.31 21.31 0 0 0 13.525-4.843 21.354 21.354 0 0 0 7.808-16.491v-21.333H362.68c11.797 0 21.333-9.557 21.333-21.333V320c0-11.776-9.536-21.333-21.333-21.333z"></path>
+                                                    </g>
+                                                </g>
+                                            </g>
+                                        </g>
+                                    </svg>
+                                </div>
+                                <span class="ml-3 text-dark-500/100 text-sm font-light" sidebar-toggle-item>Sair</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+        <!--Fim sidebar-->
+        {% block content %}
+        {% endblock content %}
+    </div>
+    <!--Começo Main Content-->    
+    <!--Fim Main Content-->
+
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
+    <script src="{% static "global/js/base-script.js" %}"></script>
+    {% block script %}
+    {% endblock script %}
+</body>
+</html>
+

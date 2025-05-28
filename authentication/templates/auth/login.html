@@ -1,0 +1,70 @@
+{% load compress %}
+{% load static %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoDash Pro | Login</title>
+    <!-- MATERIAL ICON -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=menu_open" />
+    <!-- stylesheet -->
+    {% compress css %}
+    <link rel="stylesheet" href="{% static 'src/output.css' %}">
+    {% endcompress %}
+</head>
+<body class="bg-gray-100 font-inter">
+    <main class="bg-gray-100">
+        <div class="flex flex-col justify-center items-center px-6 pt-8 mx-auto md:h-screen pt:mt-0">
+            <div class="flex justify-center items-center mb-8 text-2xl font-semibold lg:mb-10">
+                <img src={% static "global/img/logo.png" %} class="mr-2 h-9 w-9" alt="EcoDash Logo">
+                <span class="hidden md:inline-block self-center text-2xl font-bold whitespace-nowrap">EcoDash PRO</span>
+            </div>
+            <!--Card-->
+            <div class="p-10 w-full max-w-lg bg-white rounded-2xl shadow-xl shadow-gray-300">
+                <div class="space-y-8">
+                    <h2 class="text-2xl font-bold text-gray-900">Entre no seu EcoDash</h2>
+                    <div class="text-center text-gray-400 my-4">
+
+                        {% if msg %}
+                            <p>{{ msg }}</p>
+                        {% endif %}
+
+                    </div>
+
+                    <form method="POST" class="mt-8 space-y-6">
+                        {% csrf_token %}
+                        <div>
+                            <label for="email" name="email" class="block mb-2 text-sm font-poppins text-gray-900">Email</label>
+                            {{ form.email }}
+                        </div>
+                        <div>
+                            <label for="password" class="block mb-2 text-sm font-poppins text-gray-900">Senha</label>
+                            {{ form.password }}
+                        </div>
+                        <div class="flex items-start">
+                            <div class="flex items-center h-5">
+                                {{ form.remember_me }}
+                            </div>
+                            <div class="ml-3 text-sm">
+                                <label for="remember" class="font-poppins text-gray-900">Lembre-se de mim</label>
+                            </div>
+                            <a href="#" class="ml-auto text-sm font-roboto text-fuchsia-600 hover:underline">Esqueceu sua senha?</a>
+                        </div>
+                        <button type="submit" class="py-3 px-5 w-full text-base font-urbanist text-center text-white bg-gradient-to-br from-pink-500 to-violet-500 hover:scale-[1.02] shadow-md shadow-gray-300 transition-transform rounded-lg sm:w-auto">
+                            Entrar na sua conta
+                        </button>
+                        <div class="text-sm font-poppins text-gray-500">
+                            Ainda não tem conta?
+                            <a href="{% url "authentication:cadastro" %}" class="text-fuchsia-600 hover:underline">Criar conta!</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
