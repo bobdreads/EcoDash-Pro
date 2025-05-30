@@ -18,81 +18,115 @@
 <div id="main-content" class="h-full w-full bg-gray-100 relative overflow-y-auto lg:ml-64">
     <main>
         <div class="pt-6 px-4">
+            {# Local para exibir mensagens do Django #}
+            {% if messages %}
+                {% for message in messages %}
+                <div class="mb-4 p-4 text-sm rounded-lg
+                            {% if message.tags == 'success' %} bg-green-100 text-green-700 border border-green-400 {% endif %}
+                            {% if message.tags == 'error' %} bg-red-100 text-red-700 border border-red-400 {% endif %}
+                            {% if message.tags == 'info' %} bg-blue-100 text-blue-700 border border-blue-400 {% endif %}
+                            {% if message.tags == 'warning' %} bg-yellow-100 text-yellow-700 border border-yellow-400 {% endif %}"
+                     role="alert">
+                    {{ message }}
+                </div>
+                {% endfor %}
+            {% endif %}
+
             <div class="bg-white shadow rounded-lg p-4 sm:p-6 xl:p-8 ">
                 <h3 class="text-xl font-semibold text-gray-900 mb-5">Registrar Novo Trade</h3>
 
-                <form action="#" method="POST">
+                <form method="POST">
                     {% csrf_token %}
+
+                    {# Erros gerais do formulário (non-field errors) #}
+                    {% if form.non_field_errors %}
+                        <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-4" role="alert">
+                            {% for error in form.non_field_errors %}
+                                <p>{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 
+                        {# Campo Conta Selecionada #}
                         <div>
-                            <label for="conta" class="block mb-2 text-sm font-medium text-gray-900">Conta</label>
-                            <select id="conta" name="conta" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5">
-                                <option selected>Escolha uma conta</option>
-                                <option value="CONTA1">Conta Principal</option>
-                                <option value="CONTA2">Conta Secundária</option>
-                                {# Adicione mais opções de conta conforme necessário #}
-                            </select>
+                            <label for="{{ form.conta_selecionada.id_for_label }}" class="block mb-2 text-sm font-medium text-gray-900">{{ form.conta_selecionada.label }}</label>
+                            {{ form.conta_selecionada }}
+                            {% for error in form.conta_selecionada.errors %}<p class="text-red-500 text-xs mt-1">{{ error }}</p>{% endfor %}
                         </div>
 
+                        {# Campo Lado (RadioSelect) #}
                         <div>
-                            <label class="block mb-2 text-sm font-medium text-gray-900">Lado</label>
-                            <div class="flex items-center space-x-4">
+                            <label class="block mb-2 text-sm font-medium text-gray-900">{{ form.lado.label }}</label>
+                            <div class="flex items-center space-x-4 mt-2">
+                                {% for radio in form.lado %}
                                 <div class="flex items-center">
-                                    <input id="compra" type="radio" value="COMPRA" name="lado" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2">
-                                    <label for="compra" class="ml-2 text-sm font-medium text-gray-900">Compra</label>
+                                    {{ radio.tag }}
+                                    <label for="{{ radio.id_for_label }}" class="ml-2 text-sm font-medium text-gray-900">{{ radio.choice_label }}</label>
                                 </div>
-                                <div class="flex items-center">
-                                    <input id="venda" type="radio" value="VENDA" name="lado" class="w-4 h-4 text-pink-600 bg-gray-100 border-gray-300 focus:ring-pink-500 focus:ring-2">
-                                    <label for="venda" class="ml-2 text-sm font-medium text-gray-900">Venda</label>
-                                </div>
+                                {% endfor %}
                             </div>
+                            {% for error in form.lado.errors %}<p class="text-red-500 text-xs mt-1">{{ error }}</p>{% endfor %}
                         </div>
 
+                        {# Campo Ativo #}
                         <div>
-                            <label for="ativo" class="block mb-2 text-sm font-medium text-gray-900">Ativo</label>
-                            <input type="text" name="ativo" id="ativo" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5" placeholder="Ex: PETR4, WINDFUT" required>
+                            <label for="{{ form.ativo.id_for_label }}" class="block mb-2 text-sm font-medium text-gray-900">{{ form.ativo.label }}</label>
+                            {{ form.ativo }}
+                            {% for error in form.ativo.errors %}<p class="text-red-500 text-xs mt-1">{{ error }}</p>{% endfor %}
                         </div>
 
+                        {# Campo Quantidade #}
                         <div>
-                            <label for="quantidade" class="block mb-2 text-sm font-medium text-gray-900">Quantidade</label>
-                            <input type="number" name="quantidade" id="quantidade" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5" placeholder="Ex: 100" required>
+                            <label for="{{ form.quantidade.id_for_label }}" class="block mb-2 text-sm font-medium text-gray-900">{{ form.quantidade.label }}</label>
+                            {{ form.quantidade }}
+                            {% for error in form.quantidade.errors %}<p class="text-red-500 text-xs mt-1">{{ error }}</p>{% endfor %}
                         </div>
 
+                        {# Campo Data da Operação #}
                         <div>
-                            <label for="data_trade" class="block mb-2 text-sm font-medium text-gray-900">Data</label>
-                            <input type="date" name="data_trade" id="data_trade" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5" required>
+                            <label for="{{ form.data_operacao.id_for_label }}" class="block mb-2 text-sm font-medium text-gray-900">{{ form.data_operacao.label }}</label>
+                            {{ form.data_operacao }}
+                            {% for error in form.data_operacao.errors %}<p class="text-red-500 text-xs mt-1">{{ error }}</p>{% endfor %}
                         </div>
 
+                        {# Campo Horário da Operação #}
                         <div>
-                            <label for="horario_trade" class="block mb-2 text-sm font-medium text-gray-900">Horário</label>
-                            <input type="time" name="horario_trade" id="horario_trade" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5" required>
+                            <label for="{{ form.horario_operacao.id_for_label }}" class="block mb-2 text-sm font-medium text-gray-900">{{ form.horario_operacao.label }}</label>
+                            {{ form.horario_operacao }}
+                            {% for error in form.horario_operacao.errors %}<p class="text-red-500 text-xs mt-1">{{ error }}</p>{% endfor %}
                         </div>
 
+                        {# Campo Preço da Operação #}
                         <div>
-                            <label for="preco" class="block mb-2 text-sm font-medium text-gray-900">Preço</label>
-                            <input type="text" name="preco" id="preco" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5" placeholder="Ex: 25,50" required>
-                            {# Considere usar um input type="number" com step="0.01" para valores monetários #}
+                            <label for="{{ form.preco_operacao.id_for_label }}" class="block mb-2 text-sm font-medium text-gray-900">{{ form.preco_operacao.label }}</label>
+                            {{ form.preco_operacao }}
+                            {% for error in form.preco_operacao.errors %}<p class="text-red-500 text-xs mt-1">{{ error }}</p>{% endfor %}
                         </div>
 
+                        {# Campo Corretagem #}
                         <div>
-                            <label for="corretagem" class="block mb-2 text-sm font-medium text-gray-900">Corretagem</label>
-                            <input type="text" name="corretagem" id="corretagem" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5" placeholder="Ex: 4,90">
-                             {# Considere usar um input type="number" com step="0.01" para valores monetários #}
+                            <label for="{{ form.corretagem.id_for_label }}" class="block mb-2 text-sm font-medium text-gray-900">{{ form.corretagem.label }}</label>
+                            {{ form.corretagem }}
+                            {% for error in form.corretagem.errors %}<p class="text-red-500 text-xs mt-1">{{ error }}</p>{% endfor %}
                         </div>
 
+                        {# Campo Anotações (ocupa duas colunas) #}
                         <div class="md:col-span-2">
-                            <label for="anotacoes" class="block mb-2 text-sm font-medium text-gray-900">Anotações</label>
-                            <textarea id="anotacoes" name="anotacoes" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-cyan-600 focus:border-cyan-600" placeholder="Detalhes sobre a operação, estratégia utilizada..."></textarea>
+                            <label for="{{ form.anotacoes.id_for_label }}" class="block mb-2 text-sm font-medium text-gray-900">{{ form.anotacoes.label }}</label>
+                            {{ form.anotacoes }}
+                            {% for error in form.anotacoes.errors %}<p class="text-red-500 text-xs mt-1">{{ error }}</p>{% endfor %}
                         </div>
 
+                        {# Campo Tags (ocupa duas colunas) - Interface de pills + HiddenInput do Django Form #}
                         <div class="md:col-span-2">
                             <label for="tag-input" class="block mb-2 text-sm font-medium text-gray-900">Tags</label>
                             <div id="tag-container" class="flex flex-wrap items-center gap-2 p-2.5 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus-within:ring-cyan-600 focus-within:border-cyan-600">
-                                {/* As pills vão aqui */}
                                 <input type="text" id="tag-input" class="bg-transparent border-0 focus:ring-0 flex-grow p-0" placeholder="Adicione tags...">
                             </div>
-                            <input type="hidden" name="tags_hidden" id="tags_hidden"> {/* Campo para enviar as tags */}
+                            {{ form.tags }} {# Este é o HiddenInput renderizado pelo Django, com name="tags" e o ID que definimos no forms.py #}
+                            {% for error in form.tags.errors %}<p class="text-red-500 text-xs mt-1">{{ error }}</p>{% endfor %}
                             <p class="mt-1 text-xs text-gray-500">Pressione Enter ou vírgula para adicionar uma tag.</p>
                         </div>
                     </div>
@@ -110,41 +144,36 @@
 {% endblock content %}
 
 {% block script %}
-{# Você pode adicionar scripts específicos para esta página aqui, se necessário #}
 <script>
-    // Pequeno script para garantir que a data não seja no futuro, se desejar.
-    const dateInput = document.getElementById('data_trade');
-    if (dateInput) {
-        dateInput.max = new Date().toISOString().split("T")[0];
-    }
-    // Script para data máxima (opcional, como antes)
-    const dateInput = document.getElementById('data_trade');
-    if (dateInput) {
-        dateInput.max = new Date().toISOString().split("T")[0];
+    // Script para data máxima (opcional)
+    const dateInputOperacao = document.getElementById("{{ form.data_operacao.id_for_label }}"); // Usa o ID do Django
+    if (dateInputOperacao) {
+        dateInputOperacao.max = new Date().toISOString().split("T")[0];
     }
 
     // --- SCRIPT PARA TAGS "PILLS" ---
     const tagContainer = document.getElementById('tag-container');
-    const tagInput = document.getElementById('tag-input');
-    const tagsHiddenInput = document.getElementById('tags_hidden');
-    let tags = [];
+    const tagVisualInput = document.getElementById('tag-input'); // Input visual para o usuário digitar
+    // Input hidden do Django Form que será populado pelo JS
+    const tagsHiddenDjangoField = document.getElementById('id_tags_hidden_field_para_js'); // ID que definimos no forms.py
+    let tagsArray = [];
 
-    // 1. Verificar se os elementos HTML foram encontrados corretamente
+    // Log para verificar se os elementos foram encontrados
     console.log("Elemento tagContainer:", tagContainer);
-    console.log("Elemento tagInput:", tagInput);
-    console.log("Elemento tagsHiddenInput:", tagsHiddenInput);
+    console.log("Elemento tagVisualInput:", tagVisualInput);
+    console.log("Elemento tagsHiddenDjangoField:", tagsHiddenDjangoField);
 
-    function updateTagsHiddenInput() {
-        if (tagsHiddenInput) { // Adicionada verificação
-            tagsHiddenInput.value = tags.join(',');
-            console.log("Input Tags Hidden atualizado:", tagsHiddenInput.value);
+    function updateTagsHiddenDjangoField() {
+        if (tagsHiddenDjangoField) {
+            tagsHiddenDjangoField.value = tagsArray.join(',');
+            console.log("Input Hidden 'tags' atualizado:", tagsHiddenDjangoField.value);
         } else {
-            console.error("ERRO: tagsHiddenInput não encontrado para atualizar!");
+            console.error("ERRO: Campo hidden 'tags' (id_tags_hidden_field_para_js) não encontrado para atualizar!");
         }
     }
 
     function createTagPill(label) {
-        console.log("2. Criando pill para:", label);
+        // console.log("Criando pill para:", label); // Descomente para debug
         const div = document.createElement('div');
         div.setAttribute('class', 'tag-pill bg-cyan-500 text-white text-xs font-semibold px-2.5 py-1 rounded-full flex items-center');
         
@@ -152,84 +181,87 @@
         span.innerHTML = label;
         
         const closeIcon = document.createElement('span');
-        closeIcon.innerHTML = '×'; // Um 'x' simples para remover
-        // Adicionado cursor-pointer para melhor UX e verificação de tagInput
+        closeIcon.innerHTML = '×';
         closeIcon.setAttribute('class', 'remove-tag ml-2 text-sm hover:font-bold cursor-pointer'); 
         closeIcon.onclick = () => {
-            console.log("Removendo tag:", label);
-            const index = tags.indexOf(label);
+            const index = tagsArray.indexOf(label);
             if (index > -1) {
-                tags.splice(index, 1);
+                tagsArray.splice(index, 1);
             }
             div.remove();
-            updateTagsHiddenInput();
-            if (tagInput) tagInput.focus(); // Volta o foco para o input, se existir
+            updateTagsHiddenDjangoField();
+            if (tagVisualInput) tagVisualInput.focus();
         };
         
         div.appendChild(span);
         div.appendChild(closeIcon);
-        console.log("Pill HTML criada:", div);
         return div;
     }
 
-    function addTag(label) {
-        console.log("3. Função addTag chamada com:", label);
+    function addTagFromVisualInput(label) {
+        // console.log("Função addTagFromVisualInput chamada com:", label); // Descomente para debug
         const trimmedLabel = label.trim();
-        if (trimmedLabel.length > 1 && !tags.includes(trimmedLabel)) { 
-            tags.push(trimmedLabel);
-            console.log("Tags no array:", tags);
+        if (trimmedLabel.length > 1 && !tagsArray.includes(trimmedLabel)) { 
+            tagsArray.push(trimmedLabel);
+            // console.log("Tags no array:", tagsArray); // Descomente para debug
             const pill = createTagPill(trimmedLabel);
             
-            // 4. Verificando antes de inserir a pill
-            if (tagContainer && tagInput && pill) {
-                tagContainer.insertBefore(pill, tagInput);
-                console.log("Pill inserida no container.");
+            if (tagContainer && tagVisualInput && pill) {
+                tagContainer.insertBefore(pill, tagVisualInput);
+                // console.log("Pill inserida no container."); // Descomente para debug
             } else {
-                // Mensagem de erro mais detalhada
-                console.error("ERRO ao inserir pill! Elementos:", 
-                    {isTagContainer: !!tagContainer, isTagInput: !!tagInput, isPill: !!pill}
+                console.error("ERRO ao inserir pill! Elementos não encontrados:", 
+                    {isTagContainer: !!tagContainer, isTagVisualInput: !!tagVisualInput, isPill: !!pill}
                 );
             }
-            updateTagsHiddenInput();
-        } else {
-            console.log("Tag não adicionada (vazia, curta ou duplicada):", trimmedLabel);
+            updateTagsHiddenDjangoField();
         }
-        if (tagInput) tagInput.value = ''; // Limpa o input, se existir
+        if (tagVisualInput) tagVisualInput.value = ''; 
     }
 
-    // 5. Verificando se o tagInput existe antes de adicionar listeners
-    if (tagInput) {
-        tagInput.addEventListener('keydown', function(event) {
-            console.log("Evento keydown:", event.key);
+    if (tagVisualInput) {
+        tagVisualInput.addEventListener('keydown', function(event) {
             if (event.key === 'Enter' || event.key === ',') {
                 event.preventDefault(); 
-                console.log("Enter ou vírgula pressionado.");
-                addTag(tagInput.value);
+                addTagFromVisualInput(tagVisualInput.value);
             }
         });
 
-        tagInput.addEventListener('blur', function() {
-            console.log("Evento blur no tagInput.");
-            if (tagInput.value.trim() !== '') {
-                addTag(tagInput.value);
+        tagVisualInput.addEventListener('blur', function() {
+            if (tagVisualInput.value.trim() !== '') {
+                addTagFromVisualInput(tagVisualInput.value);
             }
         });
     } else {
-        console.error("ERRO: tagInput não encontrado para adicionar listeners de evento!");
+        console.error("ERRO: Input visual de tags (tag-input) não encontrado!");
     }
 
-    // 6. Verificando se o tagContainer existe antes de adicionar listener
     if (tagContainer) {
         tagContainer.addEventListener('click', (event) => {
-            // Evitar que o clique no "x" de remover propague e foque o input desnecessariamente
             if (event.target.classList.contains('remove-tag')) {
                 return;
             }
-            console.log("Container da tag clicado.");
-            if (tagInput) tagInput.focus();
+            if (tagVisualInput) tagVisualInput.focus();
         });
     } else {
-        console.error("ERRO: tagContainer não encontrado para adicionar listener de clique!");
+        console.error("ERRO: Container de tags (tag-container) não encontrado!");
+    }
+
+    // Ao carregar a página, se o campo hidden do Django já tiver valor (ex: ao voltar com erro de validação), popular as pills
+    if (tagsHiddenDjangoField && tagsHiddenDjangoField.value) {
+        const existingTags = tagsHiddenDjangoField.value.split(',').filter(tag => tag.trim() !== '');
+        existingTags.forEach(tag => {
+            // Adiciona sem duplicar no array JS, pois addTagFromVisualInput já tem essa lógica
+            // Mas precisamos garantir que a pill seja criada
+            if (!tagsArray.includes(tag.trim())) { // Para evitar duplicação se o JS já tiver algo
+                 tagsArray.push(tag.trim()); // Adiciona ao array JS
+            }
+            const pill = createTagPill(tag.trim());
+            if (tagContainer && tagVisualInput && pill) {
+                tagContainer.insertBefore(pill, tagVisualInput);
+            }
+        });
+         // Não precisa chamar updateTagsHiddenDjangoField aqui, pois estamos lendo dele.
     }
 </script>
 {% endblock script %}
