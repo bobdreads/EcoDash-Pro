@@ -20,6 +20,18 @@ class OperacaoForm(forms.ModelForm):
         })
     )
 
+    LADO_FORM_CHOICES = [  # Definindo as choices EXATAS que queremos no form
+        ('COMPRA', 'Compra'),
+        ('VENDA', 'Venda'),
+    ]
+
+    lado = forms.ChoiceField(
+        choices=LADO_FORM_CHOICES,
+        widget=forms.RadioSelect(),  # Você pode adicionar attrs para classes aqui se quiser
+        required=True,  # Explicitamente obrigatório
+        label="Lado"  # Label customizado se desejar
+    )
+
     class Meta:
         model = Operacao
         fields = [
