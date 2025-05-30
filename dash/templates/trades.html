@@ -1,7 +1,17 @@
 {% extends "_base.html" %}
 {% load static %}
 
+{% block title %}| Trades{% endblock title %}
+
 {% block style %}
+<style>
+    .tag-pill {
+        /* Você pode adicionar estilos extras aqui se o Tailwind não cobrir tudo */
+    }
+    .tag-pill .remove-tag {
+        cursor: pointer;
+    }
+</style>
 {% endblock style %}
 
 {% block content %}
@@ -77,11 +87,14 @@
                         </div>
 
                         <div class="md:col-span-2">
-                            <label for="tags" class="block mb-2 text-sm font-medium text-gray-900">Tags</label>
-                            <input type="text" name="tags" id="tags" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5" placeholder="Ex: Day Trade, Swing Trade, Petrobras, Setup X">
-                            <p class="mt-1 text-xs text-gray-500">Separe as tags por vírgula.</p>
+                            <label for="tag-input" class="block mb-2 text-sm font-medium text-gray-900">Tags</label>
+                            <div id="tag-container" class="flex flex-wrap items-center gap-2 p-2.5 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus-within:ring-cyan-600 focus-within:border-cyan-600">
+                                {/* As pills vão aqui */}
+                                <input type="text" id="tag-input" class="bg-transparent border-0 focus:ring-0 flex-grow p-0" placeholder="Adicione tags...">
+                            </div>
+                            <input type="hidden" name="tags_hidden" id="tags_hidden"> {/* Campo para enviar as tags */}
+                            <p class="mt-1 text-xs text-gray-500">Pressione Enter ou vírgula para adicionar uma tag.</p>
                         </div>
-
                     </div>
 
                     <div class="mt-6">
@@ -97,12 +110,126 @@
 {% endblock content %}
 
 {% block script %}
-    {# Você pode adicionar scripts específicos para esta página aqui, se necessário #}
-    <script>
-        // Pequeno script para garantir que a data não seja no futuro, se desejar.
-        const dateInput = document.getElementById('data_trade');
-        if (dateInput) {
-            dateInput.max = new Date().toISOString().split("T")[0];
+{# Você pode adicionar scripts específicos para esta página aqui, se necessário #}
+<script>
+    // Pequeno script para garantir que a data não seja no futuro, se desejar.
+    const dateInput = document.getElementById('data_trade');
+    if (dateInput) {
+        dateInput.max = new Date().toISOString().split("T")[0];
+    }
+    // Script para data máxima (opcional, como antes)
+    const dateInput = document.getElementById('data_trade');
+    if (dateInput) {
+        dateInput.max = new Date().toISOString().split("T")[0];
+    }
+
+    // --- SCRIPT PARA TAGS "PILLS" ---
+    const tagContainer = document.getElementById('tag-container');
+    const tagInput = document.getElementById('tag-input');
+    const tagsHiddenInput = document.getElementById('tags_hidden');
+    let tags = [];
+
+    // 1. Verificar se os elementos HTML foram encontrados corretamente
+    console.log("Elemento tagContainer:", tagContainer);
+    console.log("Elemento tagInput:", tagInput);
+    console.log("Elemento tagsHiddenInput:", tagsHiddenInput);
+
+    function updateTagsHiddenInput() {
+        if (tagsHiddenInput) { // Adicionada verificação
+            tagsHiddenInput.value = tags.join(',');
+            console.log("Input Tags Hidden atualizado:", tagsHiddenInput.value);
+        } else {
+            console.error("ERRO: tagsHiddenInput não encontrado para atualizar!");
         }
-    </script>
+    }
+
+    function createTagPill(label) {
+        console.log("2. Criando pill para:", label);
+        const div = document.createElement('div');
+        div.setAttribute('class', 'tag-pill bg-cyan-500 text-white text-xs font-semibold px-2.5 py-1 rounded-full flex items-center');
+        
+        const span = document.createElement('span');
+        span.innerHTML = label;
+        
+        const closeIcon = document.createElement('span');
+        closeIcon.innerHTML = '×'; // Um 'x' simples para remover
+        // Adicionado cursor-pointer para melhor UX e verificação de tagInput
+        closeIcon.setAttribute('class', 'remove-tag ml-2 text-sm hover:font-bold cursor-pointer'); 
+        closeIcon.onclick = () => {
+            console.log("Removendo tag:", label);
+            const index = tags.indexOf(label);
+            if (index > -1) {
+                tags.splice(index, 1);
+            }
+            div.remove();
+            updateTagsHiddenInput();
+            if (tagInput) tagInput.focus(); // Volta o foco para o input, se existir
+        };
+        
+        div.appendChild(span);
+        div.appendChild(closeIcon);
+        console.log("Pill HTML criada:", div);
+        return div;
+    }
+
+    function addTag(label) {
+        console.log("3. Função addTag chamada com:", label);
+        const trimmedLabel = label.trim();
+        if (trimmedLabel.length > 1 && !tags.includes(trimmedLabel)) { 
+            tags.push(trimmedLabel);
+            console.log("Tags no array:", tags);
+            const pill = createTagPill(trimmedLabel);
+            
+            // 4. Verificando antes de inserir a pill
+            if (tagContainer && tagInput && pill) {
+                tagContainer.insertBefore(pill, tagInput);
+                console.log("Pill inserida no container.");
+            } else {
+                // Mensagem de erro mais detalhada
+                console.error("ERRO ao inserir pill! Elementos:", 
+                    {isTagContainer: !!tagContainer, isTagInput: !!tagInput, isPill: !!pill}
+                );
+            }
+            updateTagsHiddenInput();
+        } else {
+            console.log("Tag não adicionada (vazia, curta ou duplicada):", trimmedLabel);
+        }
+        if (tagInput) tagInput.value = ''; // Limpa o input, se existir
+    }
+
+    // 5. Verificando se o tagInput existe antes de adicionar listeners
+    if (tagInput) {
+        tagInput.addEventListener('keydown', function(event) {
+            console.log("Evento keydown:", event.key);
+            if (event.key === 'Enter' || event.key === ',') {
+                event.preventDefault(); 
+                console.log("Enter ou vírgula pressionado.");
+                addTag(tagInput.value);
+            }
+        });
+
+        tagInput.addEventListener('blur', function() {
+            console.log("Evento blur no tagInput.");
+            if (tagInput.value.trim() !== '') {
+                addTag(tagInput.value);
+            }
+        });
+    } else {
+        console.error("ERRO: tagInput não encontrado para adicionar listeners de evento!");
+    }
+
+    // 6. Verificando se o tagContainer existe antes de adicionar listener
+    if (tagContainer) {
+        tagContainer.addEventListener('click', (event) => {
+            // Evitar que o clique no "x" de remover propague e foque o input desnecessariamente
+            if (event.target.classList.contains('remove-tag')) {
+                return;
+            }
+            console.log("Container da tag clicado.");
+            if (tagInput) tagInput.focus();
+        });
+    } else {
+        console.error("ERRO: tagContainer não encontrado para adicionar listener de clique!");
+    }
+</script>
 {% endblock script %}
