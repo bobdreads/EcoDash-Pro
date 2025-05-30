@@ -9,5 +9,5 @@ def index(request):
     return render(request, 'index.html')
 
 
-def morning(request):
-    return render(request, 'morningcall.html')
+def trades(request):
+    return render(request, 'trades.html')
